@@ -1,13 +1,13 @@
-package com.example.vacation_days_calculate;
+package com.example.calculate_vacation_days;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class VacationDaysCalculateApplication {
+public class CalculateVacationDaysApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(VacationDaysCalculateApplication.class, args);
+		SpringApplication.run(CalculateVacationDaysApplication.class, args);
 	}
 
 }
