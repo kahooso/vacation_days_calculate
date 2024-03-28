@@ -6,6 +6,7 @@
     <style>
         body {
             font-family: "Comic Sans MS", sans-serif;
+            font-size: 18px;
             margin: 0;
             padding: 0;
             background-color: #f9f6f7;

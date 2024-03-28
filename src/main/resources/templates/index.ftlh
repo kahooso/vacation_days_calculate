@@ -6,6 +6,7 @@
     <title>Vacation Pay Calculator</title>
     <style>
         body {
+            font-size: 18px;
             font-family: "Comic Sans MS", sans-serif;
             margin: 0;
             padding: 0;
@@ -55,9 +56,33 @@
 <form action="/calculate" method="get">
     <label for="averageSalary">Cр. зарплата за 12 месяцев:</label>
     <input type="number" id="averageSalary" name="averageSalary">
-    <label for="vacationDays">Кол-во дней отпуска:</label>
-    <input type="number" id="vacationDays" name="vacationDays">
+    <div id="vacationDays">
+        <label for="vacationDays">Кол-во дней отпуска:</label>
+        <input type="number" id="vacationDays" name="vacationDays">
+    </div>
+    <label for="specificPeriodCheckbox">Указать конкретный период
+        <input type="checkbox" id="specificPeriodCheckbox" name="specificPeriod" style = "width: 10%">
+    </label><br>
+    <div id="specificPeriodFields" style="display:none;">
+        <label for="startDate">Начало отпуска:</label>
+        <input type="date" id="startDate" name="startDate">
+        <label for="endDate">Конец отпуска:</label>
+        <input type="date" id="endDate" name="endDate">
+    </div>
     <button type="submit">Вычислить</button>
 </form>
+<script>
+    document.getElementById("specificPeriodCheckbox").addEventListener("change", function() {
+        const specificPeriodFields = document.getElementById("specificPeriodFields");
+        const vacationDays = document.getElementById("vacationDays");
+        if (this.checked) {
+            vacationDays.style.display = "none";
+            specificPeriodFields.style.display = "block";
+        } else {
+            vacationDays.style.display = "block";
+            specificPeriodFields.style.display = "none";
+        }
+    });
+</script>
 </body>
 </html>

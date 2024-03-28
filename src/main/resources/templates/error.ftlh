@@ -6,6 +6,7 @@
     <title>Калькулятор отпускных</title>
     <style>
         body {
+            font-size: 18px;
             font-family: "Comic Sans MS", sans-serif;
             margin: 0;
             padding: 0;
