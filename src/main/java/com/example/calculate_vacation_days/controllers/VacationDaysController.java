@@ -7,22 +7,32 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import com.example.calculate_vacation_days.services.HolidayService;
+
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 
 @Controller
 public class VacationDaysController {
 
     private static final double AVERAGE_DAYS_IN_MONTH = 29.3;
+    private final HolidayService holidayService;
 
-    // main page
+    public VacationDaysController(HolidayService holidayService) {
+        this.holidayService = holidayService;
+    }
+
     @GetMapping("/")
     public String showMainPage() {
         return "main";
     }
 
-    // search + specific number of vacation days
+    @GetMapping("/**") // Обрабатываем все остальные URL-адреса
+    public String handleInvalidUrl(Model model) {
+        model.addAttribute("message", "Пожалуйста, введите URL-адресс корректно!");
+        return "error";
+    }
+
     @GetMapping("/calculate/{averageSalary}/{vacationDays}")
     public String calculateVacationSearch(@PathVariable("averageSalary") Double averageSalary,
                                           @PathVariable("vacationDays") Integer vacationDays,
@@ -30,10 +40,6 @@ public class VacationDaysController {
         return calculateVacationDays(averageSalary, vacationDays, model);
     }
 
-    @GetMapping("/info")
-    public String showInfoPage() { return "info"; }
-
-    // search + specific vacation period
     @GetMapping("/calculate/{averageSalary}/{startDate}/{endDate}") //search
     public String calculateVacationSearchWithDate(@PathVariable("averageSalary") Double averageSalary,
                                                   @PathVariable("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
@@ -42,7 +48,6 @@ public class VacationDaysController {
         return calculateVacationDaysWithDates(averageSalary, null, startDate, endDate, model);
     }
 
-    // main form
     @GetMapping("/calculate")
     public String calculateVacationDaysWithDates(@RequestParam(required = false) Double averageSalary,
                                                  @RequestParam(required = false) Integer vacationDays,
@@ -50,21 +55,29 @@ public class VacationDaysController {
                                                  @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate,
                                                  Model model) {
         if (startDate != null && endDate != null && startDate.isBefore(endDate)) {
-            long daysBetween = ChronoUnit.DAYS.between(startDate, endDate);
-            return calculateVacationDays(averageSalary, (int) daysBetween, model);
+            long workingDays = calculateWorkingDays(startDate, endDate);
+            return calculateVacationDays(averageSalary, (int) workingDays, model);
         }
         return calculateVacationDays(averageSalary, vacationDays, model);
     }
 
-    // calculate function
+    private long calculateWorkingDays(LocalDate startDate, LocalDate endDate) {
+        long workingDays = 0;
+        for (LocalDate date = startDate; date.isBefore(endDate.plusDays(0)); date = date.plusDays(1)) {
+            if (date.getDayOfWeek().getValue() <= 5 && !holidayService.isHoliday(date)) {
+                ++workingDays;
+            }
+        }
+        return workingDays;
+    }
+
     private String calculateVacationDays(Double averageSalary, Integer vacationDays, Model model) {
         validateInputData(averageSalary, vacationDays);
         double vacationPayment = averageSalary / AVERAGE_DAYS_IN_MONTH * vacationDays;
-        model.addAttribute("payment", Math.round(vacationPayment));
+        model.addAttribute("payment", (double) Math.round(vacationPayment));
         return "result";
     }
 
-    // validation
     private void validateInputData(Double averageSalary, Integer vacationDays) {
         if (averageSalary == null || vacationDays == null || averageSalary <= 0 || vacationDays <= 0) {
             throw new IllegalArgumentException("Пожалуйста, введите данные корректно!");

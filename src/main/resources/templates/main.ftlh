@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../static/icons/blue_flower.ico" type="image/x-icon">
     <title>Vacation Pay Calculator</title>
     <style>
         body {
@@ -18,6 +19,20 @@
             color: #6e8a67;
             font-size: 24px;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #aed2ae;
+            color: #3a573a;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #96b796;
+            transform: scale(1.05);
         }
         form {
             max-width: 500px;
@@ -40,19 +55,20 @@
             border-radius: 4px;
             box-sizing: border-box;
         }
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #aed2ae;
-            color: #3a573a;
-            border: none;
+        .code-example {
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
             border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
+            font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+            padding: 5px 10px;
+            margin: 0;
+            display: inline-block;
+            font-size: 12px;
         }
-        button:hover {
-            background-color: #96b796;
-            transform: scale(1.05);
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
         }
     </style>
 </head>
@@ -78,10 +94,10 @@
 </form>
 <h1>Как использовать поиск для расчетов</h1>
 <form>
-    <p>Вы также можете воспользоваться поиском для быстрого расчета. Введите параметры напрямую в строку запроса, например:</p>
+    <p>Вы также можете воспользоваться поиском для быстрого расчета. Введите параметры напрямую в строку запрос:</p>
     <ul>
-        <li>http://localhost:8080/calculate?averageSalary=100&vacationDays=20<br>Расчет оплаты отпуска при зарплате 100 и 20 днях отпуска.</li>
-        <li>http://localhost:8080/calculate?averageSalary=100&startDate=2024-01-01&endDate=2024-01-10<br>Расчет оплаты отпуска при зарплате 100 и отпуске с 1 по 10 января 2024 года.</li>
+        <li class="code-example"><code>localhost:8080/calculate/заработная_плата/количество_дней_отпуска</code></li>
+        <li class="code-example" style="margin-top: 10px;"><code>localhost:8080/calculate/заработная_плата/начало_отпуска/конец_отпуска</code></li>
     </ul>
 </form>
 <script>
