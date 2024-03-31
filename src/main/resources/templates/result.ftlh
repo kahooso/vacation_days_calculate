@@ -5,7 +5,7 @@
     <title>Калькулятор отпускных</title>
     <style>
         body {
-            font-family: "Comic Sans MS", sans-serif;
+            font-family: 'Roboto', 'Helvetica Neue', sans-serif;
             font-size: 14px;
             margin: 0;
             padding: 0;

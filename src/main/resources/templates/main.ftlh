@@ -6,48 +6,53 @@
     <title>Vacation Pay Calculator</title>
     <style>
         body {
-            font-size: 18px;
-            font-family: "Comic Sans MS", sans-serif;
+            font-size: 16px;
+            font-family: 'Roboto', 'Helvetica Neue', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f9f6f7;
+            background-color: #f0f8f0;
+            color: #3a3a3a;
         }
         h1 {
             text-align: center;
-            color: #7b6c73;
+            color: #6e8a67;
+            font-size: 24px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
         form {
             max-width: 500px;
             margin: 0 auto;
             padding: 25px;
             background-color: #ffffff;
-            border-radius: 16px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
         }
         label {
             display: block;
             margin-bottom: 5px;
-            color: #555;
+            color: #4e6e4e;
         }
-        input {
-            width: 100%;
+        input, select {
+            width: calc(100% - 20px);
             padding: 8px;
             margin-bottom: 15px;
-            border: 1px solid #e8d8e3;
+            border: 1px solid #d1ded1;
             border-radius: 4px;
             box-sizing: border-box;
         }
         button {
             width: 100%;
             padding: 10px;
-            background-color: #C6D8FF;
-            color: #333;
+            background-color: #aed2ae;
+            color: #3a573a;
             border: none;
             border-radius: 4px;
             cursor: pointer;
+            transition: background-color 0.3s;
         }
         button:hover {
-            background-color: #DEF7FE;
+            background-color: #96b796;
+            transform: scale(1.05);
         }
     </style>
 </head>
@@ -70,6 +75,14 @@
         <input type="date" id="endDate" name="endDate">
     </div>
     <button type="submit">Вычислить</button>
+</form>
+<h1>Как использовать поиск для расчетов</h1>
+<form>
+    <p>Вы также можете воспользоваться поиском для быстрого расчета. Введите параметры напрямую в строку запроса, например:</p>
+    <ul>
+        <li>http://localhost:8080/calculate?averageSalary=100&vacationDays=20<br>Расчет оплаты отпуска при зарплате 100 и 20 днях отпуска.</li>
+        <li>http://localhost:8080/calculate?averageSalary=100&startDate=2024-01-01&endDate=2024-01-10<br>Расчет оплаты отпуска при зарплате 100 и отпуске с 1 по 10 января 2024 года.</li>
+    </ul>
 </form>
 <script>
     document.getElementById("specificPeriodCheckbox").addEventListener("change", function() {

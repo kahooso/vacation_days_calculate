@@ -7,7 +7,7 @@
     <style>
         body {
             font-size: 14px;
-            font-family: "Comic Sans MS", sans-serif;
+            font-family: 'Roboto', 'Helvetica Neue', sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f9f6f7;

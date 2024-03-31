@@ -30,6 +30,9 @@ public class VacationDaysController {
         return calculateVacationDays(averageSalary, vacationDays, model);
     }
 
+    @GetMapping("/info")
+    public String showInfoPage() { return "info"; }
+
     // search + specific vacation period
     @GetMapping("/calculate/{averageSalary}/{startDate}/{endDate}") //search
     public String calculateVacationSearchWithDate(@PathVariable("averageSalary") Double averageSalary,
